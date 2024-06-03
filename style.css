@@ -1,0 +1,5 @@
+/* Estilos básicos para o layout */
+body { font-family: sans-serif; }
+#formulario, #listaUsuarios { margin-bottom: 20px; }
+input[type="text"], input[type="email"], input[type="password"] { width: 100%; padding: 10px; margin-bottom: 10px; }
+button { padding: 10px 20px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }

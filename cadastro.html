@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Gerenciamento de Usuários</title>
+  <style>
+    body { font-family: sans-serif; }
+    #form-container { margin-bottom: 20px; }
+    #user-list ul { list-style: none; padding: 0; }
+    #user-list li { margin-bottom: 10px; padding: 10px; border: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+  <h1>Gerenciamento de Usuários</h1>
+
+  <div id="form-container">
+    <h2>Criar Usuário</h2>
+    <input type="text" id="username" placeholder="Nome de usuário">
+    <input type="password" id="password" placeholder="Senha">
+    <button onclick="criarUsuario()">Criar</button>
+  </div>
+
+  <div id="user-list">
+    <h2>Lista de Usuários</h2>
+    <ul id="usuarios"></ul>
+  </div>
+
+  <script src="https://cdn.socket.io/4.4.1/socket.io.min.js"></script>
+  <script>
+    const apiUrl = 'http://localhost:8000/api/usuarios';
+    async function criarUsuario() {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      });
+
+      if (response.ok) {
+        alert('Usuário criado com sucesso!');
+        listarUsuarios();
+      } else {
+        alert('Erro ao criar usuário.');
+      }
+    }
+
+    async function listarUsuarios() {
+      const response = await fetch(apiUrl);
+      const usuarios = await response.json();
+
+      const userList = document.getElementById('usuarios');
+      userList.innerHTML = '';
+
+      usuarios.forEach(usuario => {
+        const li = document.createElement('li');
+        li.textContent = `${usuario.username} (ID: ${usuario._id})`;
+
+        const editButton = document.createElement('button');
+        editButton.textContent = 'Editar';
+        editButton.onclick = () => editarUsuario(usuario._id); 
+        li.appendChild(editButton);
+
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Excluir';
+        deleteButton.onclick = () => deletarUsuario(usuario._id); 
+        li.appendChild(deleteButton);
+
+        userList.appendChild(li);
+      });
+    }
+
+    async function editarUsuario(id) {
+      const username = prompt("Novo nome de usuário:", "");
+      const password = prompt("Nova senha:", "");
+
+      if (username && password) {
+        const response = await fetch(`${apiUrl}/${id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+
+        if (response.ok) {
+          alert('Usuário atualizado com sucesso!');
+          listarUsuarios();
+        } else {
+          alert('Erro ao atualizar usuário.');
+        }
+      }
+    }
+
+    async function deletarUsuario(id) {
+      if (confirm("Tem certeza que deseja excluir este usuário?")) {
+        const response = await fetch(`${apiUrl}/${id}`, {
+          method: 'DELETE'
+        });
+
+        if (response.ok) {
+          alert('Usuário excluído com sucesso!');
+          listarUsuarios();
+        } else {
+          alert('Erro ao excluir usuário.');
+        }
+      }
+    }
+
+    listarUsuarios();
+  </script>
+</body>
+</html>
