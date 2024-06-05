@@ -25,6 +25,13 @@ export function getUsuariosNaSala(salaId) {
     : [];
 }
 
+export function carregarMensagensSala(salaId) {
+  return salas[salaId]
+    ? Array.from(salas[salaId]).map(id => usuarios[id]?.mensagens).filter(mensagens => mensagens !== undefined)
+    : [];
+  
+}
+
 export function getSalas() {
   return Object.keys(salas);
 }

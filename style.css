@@ -1,5 +1,31 @@
-/* Estilos básicos para o layout */
-body { font-family: sans-serif; }
-#formulario, #listaUsuarios { margin-bottom: 20px; }
-input[type="text"], input[type="email"], input[type="password"] { width: 100%; padding: 10px; margin-bottom: 10px; }
-button { padding: 10px 20px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+#container {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  margin: 20px auto;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+#mensagens, #usuarios {
+  height: 200px;
+  overflow-y: scroll;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  padding: 5px;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+  box-sizing: border-box;
+}
+
+button {
+  padding: 8px 15px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}

@@ -1,13 +1,19 @@
 import mongoose from 'mongoose';
 
-const mensagemSchema = new mongoose.Schema({
-  salaId: String,
-  remetente: String,
-  texto: String,
-  timestamp: Date,
+const Mensagem = new mongoose.Schema({
+    conteudo: { type: String, required: true }, 
+    remetenteId: { type: mongoose.Schema.Types.ObjectId, ref: 'Usuario' }, 
+    destinatarioId: { type: mongoose.Schema.Types.ObjectId, ref: 'Usuario' },
+    sala: { type: String }, 
+    username: { type: String, required: true },
+    timestamp: { type: Date, default: Date.now } 
 });
 
-const Mensagem = mongoose.model('Mensagem', mensagemSchema);
 
-export default Mensagem;
+
+
+
+
+export default mongoose.model('Mensagem', Mensagem);
+
 

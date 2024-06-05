@@ -3,14 +3,14 @@ import validator from 'validator';
 import bcrypt from 'bcrypt';
 
 const usuarioSchema = new mongoose.Schema({
-  nome: { type: String, required: true },
+  username: { type: String, required: true },
   email: {
     type: String,
     required: true,
     unique: true,
     validate: [validator.isEmail, 'Por favor, insira um e-mail válido'],
   },
-  senha: { type: String, required: true },
+  password: { type: String, required: true },
 });
 
 usuarioSchema.pre('save', async function (next) {
