@@ -10,11 +10,24 @@
         <div id="usuarios"></div>
     </div>
 
+    <ul id="listaUsuarios"></ul> 
+
+
+    <div id="mensagens2"></div>
+<input type="text" id="destinatario" placeholder="Destinatário">
+<input type="text" id="mensagem2" placeholder="Mensagem">
+<button id="enviar2">Enviar</button>
+
+
     <input type="text" id="sala" placeholder="Sala">
     <input type="text" id="nome" placeholder="Nome">
     <input type="text" id="mensagem" placeholder="Mensagem" style="display: none;">
+    
     <button onclick="entrarNaSala()" id="entrar">Entrar</button>
     <button onclick="enviarMensagem()" id="enviarmsg" style="display: none;">Enviar</button>
+    <button onclick="teste()" id="teste" >Teste</button>
+
+
     
     <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"></script>
     <script src="script.js"></script>

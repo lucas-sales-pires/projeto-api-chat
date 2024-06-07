@@ -18,6 +18,7 @@ function entrarNaSala() {
     const sala = salaInput.value;
     const nome = nomeInput.value;
     socket.emit('entrarNaSala', { sala, nome });
+    socket.emit('autenticado', { nome: nome });
 
     buscarMensagens(sala);
     salaInput.style.display= "none";
@@ -26,6 +27,35 @@ function entrarNaSala() {
     mensagemInput.style.display= "block";
     enviarmsg.style.display= "block";
 }
+
+socket.on('mensagemPrivada', (mensagem) => {
+  const mensagensDiv = document.getElementById('mensagens2');
+  mensagensDiv.innerHTML += `<p>${mensagem}</p>`;
+});
+
+socket.on('erro', (mensagem) => {
+  alert(mensagem); 
+});
+
+const enviarButton = document.getElementById('enviar2');
+enviarButton.addEventListener('click', () => {
+  const destinatario = document.getElementById('destinatario').value;
+  const mensagem = document.getElementById('mensagem2').value;
+  socket.emit('mensagemPrivada', { destinatario, mensagem });
+});
+
+socket.on('usuariosOnline', (usuarios) => {
+  const listaUsuarios = document.getElementById('listaUsuarios'); 
+  listaUsuarios.innerHTML = ''; 
+
+  for (const usuario of usuarios) {
+    const item = document.createElement('li');
+    item.textContent = usuario;
+    listaUsuarios.appendChild(item);
+  }
+});
+
+
 
 function enviarMensagem() {
   socket.emit('novaMensagem', { 
